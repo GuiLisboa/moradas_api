@@ -3,13 +3,15 @@ const sql = require("./db.js");
 
 const User = function (user) {
     this.idMorador = user.idMorador;
-    this.fullname = user.fullname;
+    this.fullName = user.fullName;
     this.cpf = user.cpf;
     this.phone = user.phone;
     this.email = user.email;
     this.tower = user.tower;
     this.apartment = user.apartment;
     this.password = user.password;
+    this.isAdmin = user.isAdmin;
+    this.isActive = user.isActive;
 };
 
 User.create = (newUser, result) => {
@@ -51,8 +53,8 @@ User.findById = (idMorador, result) => {
 
 User.updateById = (idMorador, user, result) => {
     sql.query(
-        "UPDATE morador SET fullname = ?, cpf = ?, phone = ?, email = ?, tower = ?, apartment = ?, password = ? WHERE idMorador = ?",
-        [user.fullname, user.cpf, user.phone, user.email, user.tower, user.apartment, user.password, idMorador],
+        "UPDATE morador SET fullName = ?, cpf = ?, phone = ?, email = ?, tower = ?, apartment = ?, password = ? WHERE idMorador = ?",
+        [user.fullName, user.cpf, user.phone, user.email, user.tower, user.apartment, user.password, idMorador],
         (err, res) => {
             if (err) {
                 console.log("error: ", err);

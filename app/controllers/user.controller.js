@@ -9,13 +9,15 @@ exports.create = (req, res) => {
 
     const user = new User({
         idMorador: req.body.idMorador,
-        fullname: req.body.fullname,
+        fullName: req.body.fullName,
         cpf: req.body.cpf,
         phone: req.body.phone,
         email: req.body.email,
         tower: req.body.tower,
         apartment: req.body.apartment,
-        password: req.body.password
+        password: req.body.password,
+        isAdmin: req.body.isAdmin,
+        isActive: req.body.isActive
     });
 
     User.create(user, (err, data) => {
