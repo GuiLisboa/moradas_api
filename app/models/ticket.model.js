@@ -1,34 +1,30 @@
 const sql = require("./db.js");
 
 
-const User = function (user) {
-    this.idMorador = user.idMorador;
-    this.fullName = user.fullName;
-    this.cpf = user.cpf;
-    this.phone = user.phone;
-    this.email = user.email;
-    this.tower = user.tower;
-    this.apartment = user.apartment;
-    this.password = user.password;
-    this.createdOn = user.createdOn;
-    this.isAdmin = user.isAdmin;
-    this.isActive = user.isActive;
-    this.moradia_idMoradia = user.moradia_idMoradia;
+const Ticket = function (ticket) {
+    this.idOcorrencia = ticket.idTicket;
+    this.dataOcorrencia = ticket.ocorrenceDate;
+    this.TipoOcorrencia_idTipoOcorrencia = ticket.ticketType;
+    this.descricaoOcorrencia = ticket.ticketDescription;
+    this.localOcorrencia = ticket.ticketLocalDescription;
+    this.StatusOcorrencia_idStatusOcorrencia = ticket.status;
+    this.createdOn = ticket.createdOn;
+    this.morador_idMorador = ticket.morador_idMorador;
 };
 
-User.create = (newUser, result) => {
-    sql.query("INSERT INTO morador SET ?", newUser, (err, res) => {
+Ticket.create = (newTicket, result) => {
+    sql.query("INSERT INTO ocorrencia SET ?", newTicket, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);
             return;
         }
-        console.log("created user: ", { id: res.insertId, ...newUser });
-        result(null, { id: res.insertId, ...newUser });
+        console.log("created ticket: ", { id: res.insertId, ...newTicket });
+        result(null, { id: res.insertId, ...newTicket });
     });
 };
 
-User.getAll = result => {
+Ticket.getAll = result => {
     sql.query("SELECT * FROM morador", (err, res) => {
         if (err) {
             console.log("error: ", err);
@@ -41,7 +37,7 @@ User.getAll = result => {
     });
 };
 
-User.findById = (idMorador, result) => {
+Ticket.findById = (idMorador, result) => {
     sql.query(`SELECT * FROM morador WHERE idMorador = ${idMorador}`, (err, res) => {
         if (err) {
             console.log("error: ", err);
@@ -53,7 +49,7 @@ User.findById = (idMorador, result) => {
     });
 };
 
-User.updateById = (idMorador, user, result) => {
+Ticket.updateById = (idMorador, user, result) => {
     sql.query(
         "UPDATE morador SET fullName = ?, cpf = ?, phone = ?, email = ?, tower = ?, apartment = ?, password = ? WHERE idMorador = ?",
         [user.fullName, user.cpf, user.phone, user.email, user.tower, user.apartment, user.password, idMorador],
@@ -75,7 +71,7 @@ User.updateById = (idMorador, user, result) => {
     );
 };
 
-User.deleteById = (idMorador, result) => {
+Ticket.deleteById = (idMorador, result) => {
     sql.query("DELETE FROM morador WHERE idMorador = ?", idMorador, (err, res) => {
         if (err) {
             console.log("error: ", err);
@@ -93,4 +89,4 @@ User.deleteById = (idMorador, result) => {
     });
 };
 
-module.exports = User;
+module.exports = Ticket;

@@ -1,4 +1,4 @@
-const User = require("../models/user.model.js");
+const Ticket = require("../models/ticket.model.js");
 
 exports.create = (req, res) => {
     if(!req.body) {
@@ -16,22 +16,19 @@ let year = date_ob.getFullYear();
 
 let dateNow = year + "-" + month + "-" + date;
 
-    const user = new User({
-        idMorador: req.body.idMorador,
-        fullName: req.body.fullName,
-        cpf: req.body.cpf,
-        phone: req.body.phone,
-        email: req.body.email,
-        tower: req.body.tower,
-        apartment: req.body.apartment,
-        password: req.body.password,
+    const ticket = new Ticket({
+        idTicket: req.body.idTicket,
+        ocorrenceDate: req.body.ocorrenceDate,
+        ticketType: req.body.ticketType,
+        ticketDescription: req.body.ticketDescription,
+        ticketLocalDescription: req.body.ticketLocalDescription,
+        status: 1,
         createdOn: dateNow,
-        isAdmin: req.body.isAdmin,
-        isActive: req.body.isActive,
-        moradia_idMoradia: 1
+        morador_idMorador: 1
+        
     });
 
-    User.create(user, (err, data) => {
+    Ticket.create(ticket, (err, data) => {
         if(err)
             res.status(500).send({
                 message:
@@ -42,7 +39,7 @@ let dateNow = year + "-" + month + "-" + date;
 };
 
 exports.getAll = (req, res) => {
-    User.getAll((err, data) => {
+    Ticket.getAll((err, data) => {
         if(err)
             res.status(500).send({
                 message:
@@ -53,7 +50,7 @@ exports.getAll = (req, res) => {
 };
 
 exports.findById = (req, res) => {
-    User.findById(req.params.id, (err, data) => {
+    Ticket.findById(req.params.id, (err, data) => {
 
         if(err) {
             if(err.kind === "not_found") {
@@ -78,9 +75,9 @@ exports.updateById = (req, res) => {
 
     console.log(req.body);
 
-    User.updateById(
+    Ticket.updateById(
         req.params.id,
-        new User(req.body),
+        new Ticket(req.body),
         (err, data) => {
             if (err) {
                 if (err.kind === "not_found") {
@@ -98,7 +95,7 @@ exports.updateById = (req, res) => {
 };
 
 exports.deleteById = (req, res) => {
-    User.deleteById(req.params.id, (err) => {
+    Ticket.deleteById(req.params.id, (err) => {
         
         if(err) {
             if(err.kind === "not_found") {
