@@ -22,7 +22,7 @@ let dateNow = year + "-" + month + "-" + date;
         ticketType: req.body.ticketType,
         ticketDescription: req.body.ticketDescription,
         ticketLocalDescription: req.body.ticketLocalDescription,
-        status: 1,
+        status: req.body.status,
         createdOn: dateNow,
         morador_idMorador: 1
         
@@ -110,3 +110,14 @@ exports.deleteById = (req, res) => {
         } else res.send({ message: `User was deleted successfully!` });
     });
 }
+
+exports.ticketType = (req, res) => {
+    Ticket.ticketType((err, data) => {
+        if(err)
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving users."
+            });
+        else res.send(data);
+    });
+};

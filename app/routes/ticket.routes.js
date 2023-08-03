@@ -16,4 +16,6 @@ router.put("/updateById/:id", ticket.updateById);
 
 router.delete("/deleteById/:id", ticket.deleteById);
 
+router.get("/ticketType", ticket.ticketType);
+
 };

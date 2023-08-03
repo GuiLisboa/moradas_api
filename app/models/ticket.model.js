@@ -25,14 +25,14 @@ Ticket.create = (newTicket, result) => {
 };
 
 Ticket.getAll = result => {
-    sql.query("SELECT * FROM morador", (err, res) => {
+    sql.query("SELECT Oco.idOcorrencia, Oco.dataOcorrencia, Tip.tipoOcorrencia as TipoOcorrencia_idTipoOcorrencia, Oco.descricaoOcorrencia, Oco.localOcorrencia, Sta.statusOcorrencia as StatusOcorrencia_idStatusOcorrencia, Oco.createdOn FROM ocorrencia Oco INNER JOIN statusocorrencia Sta on StatusOcorrencia_idStatusOcorrencia = idStatusOcorrencia INNER JOIN tipoocorrencia Tip on TipoOcorrencia_idTipoOcorrencia = idTipoOcorrencia", (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(null, err);
             return;
         }
 
-        console.log("morador: ", res);
+        console.log("ocorrencia: ", res);
         result(null, res);
     });
 };
@@ -85,6 +85,18 @@ Ticket.deleteById = (idMorador, result) => {
         }
 
         console.log("deleted User with id: ", idMorador);
+        result(null, res);
+    });
+};
+
+Ticket.ticketType = result => {
+    sql.query("SELECT * FROM tipoocorrencia", (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+            return
+        }
+        console.log("tipoocorrencia: ", res);
         result(null, res);
     });
 };
