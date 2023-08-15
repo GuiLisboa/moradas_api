@@ -5,7 +5,8 @@ module.exports = app => {
     
     app.use('/api/reserve', router);
     
-    
+    router.post("/createNewReserveLocation", reserve.createNewReserveLocation);
+
     router.get("/findAllLocation", reserve.getAllLocation);
 
     router.get("/findReserveByUserId/:id", reserve.getReserveByUserId);

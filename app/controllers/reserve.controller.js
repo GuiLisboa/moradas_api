@@ -27,3 +27,29 @@ exports.getReserveByUserId = (req, res) => {
         }else res.send(data); 
     });
 }
+
+exports.createNewReserveLocation = (req, res) => {
+    if (!req.body) {
+        res.status(400).send({
+            message: "Content cannot be empty!"
+        });
+    };
+
+    const reserveLocation = new Reserve({
+        idEspacosComuns: req.body.idEspacosComuns,
+        title: req.body.title,
+        leftIcon: req.body.leftIcon,
+        usageFee: req.body.usageFee,
+        capacity: req.body.capacity,
+        active: 1
+    });
+
+    Reserve.createNewReserveLocation(reserveLocation, (err, data) => {
+        if(err)
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while creating the Reserve."
+            });
+        else res.send(data);
+    });
+}
