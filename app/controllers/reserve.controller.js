@@ -53,3 +53,19 @@ exports.createNewReserveLocation = (req, res) => {
         else res.send(data);
     });
 }
+
+exports.deleteReserveById = (req, res) => {
+    Reserve.deleteReserveById(req.params.id, (err, data) => {
+        if(err) {
+            if(err.kind === "not_found") {
+                res.status(404).send({
+                    message: `Not found Reserve with id ${req.params.id}.`
+                });
+            } else {
+                res.status(500).send({
+                    message: "Could not delete Reserve with id " + req.params.id
+                });
+            }
+        } else res.send({ message: `Reserve was deleted successfully!` });
+    });
+};

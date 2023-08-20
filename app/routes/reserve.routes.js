@@ -1,15 +1,16 @@
 module.exports = app => {
-    const reserve = require("../controllers/reserve.controller.js");
-    
-    var router = require("express").Router();
-    
-    app.use('/api/reserve', router);
-    
-    router.post("/createNewReserveLocation", reserve.createNewReserveLocation);
+const reserve = require("../controllers/reserve.controller.js");
 
-    router.get("/findAllLocation", reserve.getAllLocation);
+var router = require("express").Router();
 
-    router.get("/findReserveByUserId/:id", reserve.getReserveByUserId);
-    
-    
-    };
+app.use('/api/reserve', router);
+
+router.post("/createNewReserveLocation", reserve.createNewReserveLocation);
+
+router.get("/findAllLocation", reserve.getAllLocation);
+
+router.get("/findReserveByUserId/:id", reserve.getReserveByUserId);
+
+router.delete("/deleteReserveById/:id", reserve.deleteReserveById);
+
+};

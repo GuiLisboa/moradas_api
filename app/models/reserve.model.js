@@ -50,6 +50,24 @@ Reserve.createNewReserveLocation = (newReserveLocation, result) => {
     });
 };
 
-    
+Reserve.deleteReserveById = (idReserva, result) => {
+    sql.query("DELETE FROM reserva WHERE idReserva = ?", idReserva, (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+            return;
+        };
+
+        if (res.affectedRows == 0) {
+            result({ kind: "not_found" }, null);
+            return;
+        };
+
+        console.log("deleted reserve with id: ", idReserva);
+        result(null, res);
+    });
+};
+
+
 
 module.exports = Reserve;

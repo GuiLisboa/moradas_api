@@ -109,7 +109,7 @@ exports.deleteById = (req, res) => {
             }
         } else res.send({ message: `User was deleted successfully!` });
     });
-}
+};
 
 exports.ticketType = (req, res) => {
     Ticket.ticketType((err, data) => {
