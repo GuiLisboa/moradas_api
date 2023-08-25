@@ -24,7 +24,7 @@ let dateNow = year + "-" + month + "-" + date;
         ticketLocalDescription: req.body.ticketLocalDescription,
         status: req.body.status,
         createdOn: dateNow,
-        morador_idMorador: 1
+        morador_idMorador: req.body.morador_idMorador
         
     });
 

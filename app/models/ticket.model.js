@@ -38,7 +38,9 @@ Ticket.getAll = result => {
 };
 
 Ticket.findById = (idMorador, result) => {
-    sql.query(`SELECT * FROM morador WHERE idMorador = ${idMorador}`, (err, res) => {
+    sql.query(`SELECT  O.idOcorrencia, O.dataOcorrencia, T.tipoOcorrencia, O.descricaoOcorrencia, O.localOcorrencia, S.statusOcorrencia, O.createdOn
+    FROM ocorrencia O INNER JOIN statusocorrencia S on O.StatusOcorrencia_idStatusOcorrencia = S.idStatusOcorrencia 
+    INNER JOIN tipoocorrencia T on  T.idTipoOcorrencia = O.TipoOcorrencia_idTipoOcorrencia WHERE morador_idMorador = ${idMorador}`, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);

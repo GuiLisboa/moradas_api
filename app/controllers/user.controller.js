@@ -1,5 +1,6 @@
 const User = require("../models/user.model.js");
 
+
 exports.create = (req, res) => {
     if(!req.body) {
         res.status(400).send({
@@ -112,4 +113,4 @@ exports.deleteById = (req, res) => {
             }
         } else res.send({ message: `User was deleted successfully!` });
     });
-}
+};

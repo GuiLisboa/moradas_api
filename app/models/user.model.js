@@ -94,3 +94,4 @@ User.deleteById = (idMorador, result) => {
 };
 
 module.exports = User;
+
