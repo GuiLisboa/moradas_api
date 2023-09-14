@@ -13,4 +13,6 @@ router.get("/findReserveByUserId/:id", reserve.getReserveByUserId);
 
 router.delete("/deleteReserveById/:id", reserve.deleteReserveById);
 
+router.put("/disableReserveLocationById/:id", reserve.disableReserveLocationById);
+
 };

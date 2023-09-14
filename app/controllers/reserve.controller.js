@@ -9,7 +9,7 @@ exports.getAllLocation = (req, res) => {
             });
         else res.send(data);
     });
-}
+};
 
 exports.getReserveByUserId = (req, res) => {
     Reserve.getReserveByUserId(req.params.id, (err, data) => {
@@ -26,7 +26,7 @@ exports.getReserveByUserId = (req, res) => {
             }
         }else res.send(data); 
     });
-}
+};
 
 exports.createNewReserveLocation = (req, res) => {
     if (!req.body) {
@@ -52,7 +52,25 @@ exports.createNewReserveLocation = (req, res) => {
             });
         else res.send(data);
     });
-}
+};   
+
+exports.disableReserveLocationById = (req, res) => {
+    Reserve.disableReserveLocationById(
+        req.params.id,
+        (err, data) => {
+        if(err) {
+            if(err.kind === "not_found") {
+                res.status(400).send({
+                    message: `Not found Location with id ${req.params.id}.`
+                });
+            } else {
+                res.status(500).send({
+                    message: "Could not disable Location with id " + req.params.id
+                });
+            }
+        } else res.send({ message: `Location was disabled successfully!` });
+    });
+};
 
 exports.deleteReserveById = (req, res) => {
     Reserve.deleteReserveById(req.params.id, (err, data) => {

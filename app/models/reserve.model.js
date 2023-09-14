@@ -11,7 +11,7 @@ const Reserve = function (reserveLocation) {
 };
 
 Reserve.getAllLocation = result => {
-    sql.query("SELECT * FROM espacoscomuns", (err, res) => {
+    sql.query("SELECT * FROM espacoscomuns WHERE ativo = 1", (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(null, err);
@@ -47,6 +47,25 @@ Reserve.createNewReserveLocation = (newReserveLocation, result) => {
         };
         console.log("created reserve: ", { id: res.insertId, ...newReserveLocation });
         result(null, { id: res.insertId, ...newReserveLocation });
+    });
+};
+
+Reserve.disableReserveLocationById = (idEspaco, result) => {
+    sql.query("UPDATE espacoscomuns SET ativo = 0 WHERE idEspacosComuns = ?" , idEspaco, (err, res) => {
+
+            if (err) {
+                console.log("error: ", err);
+                result(null, err);
+                return;
+            }
+
+            if (res.affectedRows == 0) {
+                result({ kind: "not_found" }, null);
+                return;
+            }
+
+            console.log("updated Location: ",  idEspaco );
+            result(null, res);
     });
 };
 

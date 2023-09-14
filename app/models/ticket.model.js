@@ -25,7 +25,9 @@ Ticket.create = (newTicket, result) => {
 };
 
 Ticket.getAll = result => {
-    sql.query("SELECT Oco.idOcorrencia, Oco.dataOcorrencia, Tip.tipoOcorrencia as TipoOcorrencia_idTipoOcorrencia, Oco.descricaoOcorrencia, Oco.localOcorrencia, Sta.statusOcorrencia as StatusOcorrencia_idStatusOcorrencia, Oco.createdOn FROM ocorrencia Oco INNER JOIN statusocorrencia Sta on StatusOcorrencia_idStatusOcorrencia = idStatusOcorrencia INNER JOIN tipoocorrencia Tip on TipoOcorrencia_idTipoOcorrencia = idTipoOcorrencia", (err, res) => {
+    sql.query(`SELECT  O.idOcorrencia, O.dataOcorrencia, T.tipoOcorrencia, O.descricaoOcorrencia, O.localOcorrencia, S.statusOcorrencia, O.createdOn
+    FROM ocorrencia O INNER JOIN statusocorrencia S on O.StatusOcorrencia_idStatusOcorrencia = S.idStatusOcorrencia 
+    INNER JOIN tipoocorrencia T on  T.idTipoOcorrencia = O.TipoOcorrencia_idTipoOcorrencia`, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(null, err);
