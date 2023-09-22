@@ -28,7 +28,7 @@ Reserve.getReserveByUserId = (idMorador, result) => {
     sql.query(`SELECT R.idreserva, R.morador_idMorador, E.icone, E.nome, E.taxaUso,
     E.capacidade, R.dataLocacao 
     FROM reserva R INNER JOIN espacoscomuns E on idEspacosComuns = espacoscomuns_idEspacosComuns 
-    WHERE morador_idMorador = ${idMorador}`, (err, res) => {
+    WHERE R.dataLocacao >= curdate() and morador_idMorador = ${idMorador}`, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);

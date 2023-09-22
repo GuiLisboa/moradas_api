@@ -27,6 +27,7 @@ require("./app/routes/ticket.routes.js")(app);
 require("./app/routes/reserve.routes.js")(app);
 require("./app/routes/user_login.routes.js")(app);
 require("./app/routes/rent.routes.js")(app);
+require("./app/routes/notice.routes.js")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
