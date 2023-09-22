@@ -10,6 +10,7 @@ const Reserve = function (reserveLocation) {
     this.ativo = reserveLocation.active;
 };
 
+
 Reserve.getAllLocation = result => {
     sql.query("SELECT * FROM espacoscomuns WHERE ativo = 1", (err, res) => {
         if (err) {
@@ -86,7 +87,5 @@ Reserve.deleteReserveById = (idReserva, result) => {
         result(null, res);
     });
 };
-
-
 
 module.exports = Reserve;
