@@ -25,7 +25,7 @@ Ticket.create = (newTicket, result) => {
 };
 
 Ticket.getAll = result => {
-    sql.query(`SELECT  O.idOcorrencia, O.dataOcorrencia, T.tipoOcorrencia, O.descricaoOcorrencia, O.localOcorrencia, S.statusOcorrencia, O.createdOn
+    sql.query(`SELECT  O.idOcorrencia, O.dataOcorrencia, T.tipoOcorrencia, O.descricaoOcorrencia, O.localOcorrencia, S.statusOcorrencia, O.createdOn, O.morador_idMorador
     FROM ocorrencia O INNER JOIN statusocorrencia S on O.StatusOcorrencia_idStatusOcorrencia = S.idStatusOcorrencia 
     INNER JOIN tipoocorrencia T on  T.idTipoOcorrencia = O.TipoOcorrencia_idTipoOcorrencia`, (err, res) => {
         if (err) {
@@ -75,8 +75,30 @@ Ticket.updateById = (idMorador, user, result) => {
     );
 };
 
-Ticket.deleteById = (idMorador, result) => {
-    sql.query("DELETE FROM morador WHERE idMorador = ?", idMorador, (err, res) => {
+Ticket.updateTicketStatus = (idTicket, status, result) => {
+    sql.query(
+        "UPDATE ocorrencia SET StatusOcorrencia_idStatusOcorrencia = ?  WHERE idOcorrencia = ?",
+        [status, idTicket],        
+        (err, res) => {
+            if (err) {
+                console.log("error: ", err);
+                result(null, err);
+                return;
+            }
+
+            if (res.affectedRows == 0) {
+                result({ kind: "not_found" }, null);
+                return;
+            }
+
+            console.log("updated user: ", { idTicket: idTicket, ...status });
+            result(null, { idTicket: idTicket, ...status });
+        }
+    );
+};
+
+Ticket.deleteById = (idTicket, result) => {
+    sql.query("DELETE FROM ocorrencia WHERE idOcorrencia = ?", idTicket, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(null, err);
@@ -88,7 +110,7 @@ Ticket.deleteById = (idMorador, result) => {
             return;
         }
 
-        console.log("deleted User with id: ", idMorador);
+        console.log("deleted ticket with id: ", idTicket);
         result(null, res);
     });
 };

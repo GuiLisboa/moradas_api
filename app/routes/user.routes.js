@@ -6,7 +6,6 @@ var router = require("express").Router();
 
 app.use('/api/user', router);
 
-// Create a new User
 router.post("/createUser", user.create);
 
 router.get("/findAll", user.getAll);
