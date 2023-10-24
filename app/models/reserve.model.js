@@ -24,6 +24,36 @@ Reserve.getAllLocation = result => {
     });
 };
 
+Reserve.getAllReserves = result => {
+    sql.query(`SELECT R.idreserva, R.morador_idMorador, E.icone, E.nome, E.taxaUso,
+    E.capacidade, R.dataLocacao, M.fullName, M.tower, M.apartment
+    FROM reserva R INNER JOIN espacoscomuns E on idEspacosComuns = espacoscomuns_idEspacosComuns 
+    INNER JOIN morador M on R.morador_idMorador = M.idMorador
+    WHERE R.dataLocacao >= curdate() ORDER BY 7 ASC`, (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+            return;
+        };
+
+        console.log("reservas: ", res);
+        result(null, res);
+    });
+};
+
+Reserve.findAllDateReserve = (idEspaco, result) => {
+    sql.query(`SELECT dataLocacao FROM reserva WHERE espacoscomuns_idEspacosComuns = ${idEspaco}`, (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+            return;
+        }
+        console.log("espaço: ", res);
+        result(null, res);
+    });
+};
+
+
 Reserve.getReserveByUserId = (idMorador, result) => {
     sql.query(`SELECT R.idreserva, R.morador_idMorador, E.icone, E.nome, E.taxaUso,
     E.capacidade, R.dataLocacao 

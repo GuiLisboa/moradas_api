@@ -99,8 +99,8 @@ exports.updateById = (req, res) => {
 };
 
 exports.deleteById = (req, res) => {
-    User.deleteById(req.params.id, (err) => {
-        
+    User.deleteById(req.params.id, (err, data) => {
+        oi = data.toString();
         if(err) {
             if(err.kind === "not_found") {
                 res.status(404).send({
@@ -111,6 +111,9 @@ exports.deleteById = (req, res) => {
                     message: "Could not delete User with id " + req.params.id
                 });
             }
-        } else res.send({ message: `User was deleted successfully!` });
+        } if (oi.length > 45) {
+            res.status(404).send({ message: `User could not delete! Virify if the user has a dependecy!`});
+            
+        } else res.send({ message: `User was deleted successfully!` + data });
     });
 };

@@ -11,6 +11,28 @@ exports.getAllLocation = (req, res) => {
     });
 };
 
+exports.getAllReserves = (req, res) => {
+    Reserve.getAllReserves((err, data) => {
+        if(err)
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving reserves."
+            });
+        else res.send(data);
+    });
+};
+
+exports.findAllDateReserve = (req, res) => {
+    Reserve.findAllDateReserve(req.params.id, (err, data) => {
+        if(err)
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving dates."
+            });
+        else res.send(data);
+    });
+};
+
 exports.getReserveByUserId = (req, res) => {
     Reserve.getReserveByUserId(req.params.id, (err, data) => {
 
